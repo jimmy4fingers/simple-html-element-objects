@@ -61,7 +61,7 @@ class ElementDecorator implements ElementDecoratorInterface
 
     private function getDecoratedEndTag()
     {
-        if ($this->element->getEndTag() === false) {
+        if ($this->element->hasEndTag() === false) {
             return '';
         }
 

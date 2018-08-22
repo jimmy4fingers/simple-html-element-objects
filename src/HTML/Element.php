@@ -113,7 +113,7 @@ class Element implements ElementInterface
     /**
      * @return bool
      */
-    public function getEndTag()
+    public function hasEndTag()
     {
         return $this->endTag;
     }
