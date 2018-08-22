@@ -1,3 +1,11 @@
 #!/bin/sh
 
 echo "Pre commit checks running..."
+
+./vendor/bin/phpspec run
+
+./vendor/bin/phpcs --standard=PSR2 src
+
+./vendor/bin/phpmd src text mess-dector-rules.xml
+
+./vendor/bin/phpstan analyse src --level=7
