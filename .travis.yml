@@ -13,7 +13,5 @@ cache:
 
 # Run script
 script:
-- ./vendor/bin/phpspec -v
 - ./vendor/bin/phpspec run --config phpspec.travis.yml -vvv
-- ./vendor/bin/phpcs -v
 - ./vendor/bin/phpcs --standard=PSR2 src
