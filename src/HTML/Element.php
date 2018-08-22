@@ -26,7 +26,7 @@ class Element implements ElementInterface
     /**
      * HTML between tags
      *
-     * @var string
+     * @var mixed
      */
     protected $html;
 
@@ -45,8 +45,8 @@ class Element implements ElementInterface
     }
 
     /**
-     * @param string      $attribute
-     * @param $value mixed
+     * @param string $attribute
+     * @param mixed $value
      */
     public function setAttribute(string $attribute, $value)
     {
@@ -87,7 +87,7 @@ class Element implements ElementInterface
     }
 
     /**
-     * @param string|ElementInterface $html
+     * @param mixed $html
      */
     public function setHTML($html)
     {
