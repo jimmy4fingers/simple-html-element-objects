@@ -14,5 +14,10 @@
       "ElementObjects\\": "src"
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "post-install-cmd": [
+      "php config\\git-setup.php"
+    ]
+  }
 }
