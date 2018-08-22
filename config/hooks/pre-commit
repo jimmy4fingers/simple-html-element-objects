@@ -2,10 +2,34 @@
 
 echo "Pre commit checks running..."
 
-./vendor/bin/phpspec run
+echo "Running BDD Tests..."
+php ./vendor/bin/phpspec run
+if [ $? != 0 ]
+then
+    echo "BDD Tests are failing, please fix."
+    exit 1
+fi
 
-./vendor/bin/phpcs --standard=PSR2 src
+echo "Running code sniffer checks..."
+php ./vendor/bin/phpcs --standard=PSR2 src
+if [ $? != 0 ]
+then
+    echo "Code sniffer checks are failing, please fix."
+    exit 1
+fi
 
-./vendor/bin/phpmd src text mess-dector-rules.xml
+echo "Running mess detector checks..."
+php ./vendor/bin/phpmd src text mess-dector-rules.xml
+if [ $? != 0 ]
+then
+    echo "Mess detector checks are failing, please fix."
+    exit 1
+fi
 
-./vendor/bin/phpstan analyse src --level=7
+echo "Running code lint checks..."
+php ./vendor/bin/phpstan analyse src --level=7
+if [ $? != 0 ]
+then
+    echo "Code lint checks are failing, please fix."
+    exit 1
+fi
