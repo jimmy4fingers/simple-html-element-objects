@@ -1,0 +1,4 @@
+suites:
+    mapper_suite:
+        namespace: ElementObjects
+        psr4_prefix: ElementObjects

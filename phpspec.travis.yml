@@ -1,0 +1,6 @@
+suites:
+  default:
+    namespace: ElementObjects
+    psr4_prefix: ElementObjects
+
+formatter.name: pretty

@@ -1,0 +1,14 @@
+{
+  "name": "jimmy4fingers/simple-html-element-objects",
+  "description": "HTML elements as PHP objects with decorators",
+  "require": {
+    "php": ">=7",
+    "phpspec/phpspec": "^4.3"
+  },
+  "minimum-stability": "stable",
+  "autoload":{
+    "psr-4":{
+      "ElementObjects\\": "src"
+    }
+  }
+}
