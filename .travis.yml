@@ -15,3 +15,4 @@ cache:
 script:
 - ./vendor/bin/phpspec run --config phpspec.travis.yml -vvv
 - ./vendor/bin/phpcs --standard=PSR2 src
+- ./vendor/bin/phpmd src text mess-dector-rules.xml
