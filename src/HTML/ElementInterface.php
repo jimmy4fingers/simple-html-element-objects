@@ -16,7 +16,7 @@ interface ElementInterface
     public function getAttributes();
     public function setTag(string $tag);
     public function getTag();
-    public function getEndTag();
+    public function hasEndTag();
     public function setEndTag(bool $endTag);
     public function setHTML($html);
     public function getHTML();

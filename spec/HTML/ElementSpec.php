@@ -78,6 +78,6 @@ class ElementSpec extends ObjectBehavior
     function it_sets_end_tag()
     {
         $this->setEndTag(false);
-        $this->getEndTag()->shouldReturn(false);
+        $this->hasEndTag()->shouldReturn(false);
     }
 }

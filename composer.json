@@ -3,7 +3,10 @@
   "description": "HTML elements as PHP objects with decorators",
   "require": {
     "php": ">=7",
-    "phpspec/phpspec": "^4.3"
+    "phpspec/phpspec": "^4.3",
+    "squizlabs/php_codesniffer": "3.*",
+    "phpmd/phpmd" : "@stable",
+    "phpstan/phpstan": "^0.9.2"
   },
   "minimum-stability": "stable",
   "autoload":{

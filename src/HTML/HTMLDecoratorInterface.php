@@ -12,7 +12,7 @@ interface HTMLDecoratorInterface
 {
     public function element(ElementInterface $element);
     public function beforeElement(ElementInterface $element);
-    public function AfterElement(ElementInterface $element);
+    public function afterElement(ElementInterface $element);
     public function parentElement(ElementInterface $element);
     public function __toString();
 }

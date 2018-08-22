@@ -12,23 +12,27 @@ class Element implements ElementInterface
 {
     /**
      * HTML tag
+     *
      * @var string
      */
     protected $tag;
     /**
      * array of HTML attributes
+     *
      * @var array
      */
     protected $attributes;
 
     /**
      * HTML between tags
-     * @var string
+     *
+     * @var mixed
      */
     protected $html;
 
     /**
      * has end HTML tag or not
+     *
      * @var bool $endTag
      */
     protected $endTag = true;
@@ -42,7 +46,7 @@ class Element implements ElementInterface
 
     /**
      * @param string $attribute
-     * @param $value mixed
+     * @param mixed $value
      */
     public function setAttribute(string $attribute, $value)
     {
@@ -50,7 +54,7 @@ class Element implements ElementInterface
     }
 
     /**
-     * @param string $attribute
+     * @param  string $attribute
      * @return mixed
      */
     public function getAttribute(string $attribute)
@@ -83,7 +87,7 @@ class Element implements ElementInterface
     }
 
     /**
-     * @param string|ElementInterface $html
+     * @param mixed $html
      */
     public function setHTML($html)
     {
@@ -109,7 +113,7 @@ class Element implements ElementInterface
     /**
      * @return bool
      */
-    public function getEndTag()
+    public function hasEndTag()
     {
         return $this->endTag;
     }
@@ -124,8 +128,9 @@ class Element implements ElementInterface
         }
 
         if (array_key_exists('attributes', $settings) && is_array($settings['attributes'])) {
-            foreach ($settings['attributes'] as $attr=>$value)
+            foreach ($settings['attributes'] as $attr => $value) {
                 $this->setAttribute($attr, $value);
+            }
         }
 
         if (array_key_exists('html', $settings)) {
