@@ -1,35 +1,43 @@
 #!/bin/sh
 
-echo "Pre commit checks running..."
+PROJECT=`php -r "echo dirname(dirname(dirname(realpath('$0'))));"`
+STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php`
 
-echo "Running BDD Tests..."
-php ./vendor/bin/phpspec run
-if [ $? != 0 ]
+# Determine if a file list is passed
+if [ "$#" -eq 1 ]
 then
-    echo "BDD Tests are failing, please fix."
-    exit 1
+    oIFS=$IFS
+    IFS='
+    '
+    SFILES="$1"
+    IFS=$oIFS
+fi
+SFILES=${SFILES:-$STAGED_FILES_CMD}
+
+echo "Checking PHP Lint..."
+for FILE in $SFILES
+do
+    php -l -d display_errors=0 $PROJECT/$FILE
+    if [ $? != 0 ]
+    then
+        echo "Fix the error before commit."
+        exit 1
+    fi
+    FILES="$FILES $PROJECT/$FILE"
+done
+
+if [ "$FILES" != "" ]
+then
+    echo "Running Code Sniffer. Code standard PSR2."
+    ./vendor/bin/phpcs --standard=PSR2 --colors --encoding=utf-8 -n -p $FILES
+    if [ $? != 0 ]
+    then
+        echo "Fix the error before commit!"
+        echo "Run"
+        echo "  ./vendor/bin/phpcbf --standard=PSR2 $FILES"
+        echo "for automatic fix or fix it manually."
+        exit 1
+    fi
 fi
 
-echo "Running code sniffer checks..."
-php ./vendor/bin/phpcs --standard=PSR2 src
-if [ $? != 0 ]
-then
-    echo "Code sniffer checks are failing, please fix."
-    exit 1
-fi
-
-echo "Running mess detector checks..."
-php ./vendor/bin/phpmd src text mess-dector-rules.xml
-if [ $? != 0 ]
-then
-    echo "Mess detector checks are failing, please fix."
-    exit 1
-fi
-
-echo "Running code lint checks..."
-php ./vendor/bin/phpstan analyse src --level=7
-if [ $? != 0 ]
-then
-    echo "Code lint checks are failing, please fix."
-    exit 1
-fi
+exit $?
