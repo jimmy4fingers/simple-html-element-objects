@@ -8,6 +8,7 @@ class ElementDecorator implements ElementDecoratorInterface
 
     /**
      * ElementDecorator constructor.
+     *
      * @param ElementInterface $element
      */
     public function __construct(ElementInterface $element)
@@ -44,12 +45,13 @@ class ElementDecorator implements ElementDecoratorInterface
     private function getDecoratedTag()
     {
         $attr = $this->element->getAttributes();
-        $htmlTagParts[] = $this->element->getTag();;
+        $htmlTagParts[] = $this->element->getTag();
 
         $str = '<';
         if (is_array($attr) && !empty($attr)) {
-            foreach ($attr as $key => $value)
+            foreach ($attr as $key => $value) {
                 $htmlTagParts[] = $key . '="'. $value .'"';
+            }
         }
         $str .= implode(' ', $htmlTagParts);
         $str .= '>';
@@ -59,8 +61,9 @@ class ElementDecorator implements ElementDecoratorInterface
 
     private function getDecoratedEndTag()
     {
-        if ($this->element->getEndTag() === false)
+        if ($this->element->getEndTag() === false) {
             return '';
+        }
 
         return '</'.$this->element->getTag().'>';
     }
