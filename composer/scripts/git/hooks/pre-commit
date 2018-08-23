@@ -4,6 +4,17 @@ STATUS=0
 
 echo "Running pre commit checks..."
 
+if [ -f ./vendor/bin/phpstan ]
+then
+    echo "===== Running PHP Syntax checks..."
+    ./vendor/bin/phpstan analyse src --level=7 -q
+    if [ $? -ne 0 ]
+    then
+       echo " - PHP Standards has found issues."
+       STATUS=1
+    fi
+fi
+
 if [ -f ./vendor/bin/phpspec ]
 then
     echo "===== Running BDD tests..."
@@ -12,6 +23,16 @@ then
     then
        echo " - BDD tests have failed."
        STATUS=1
+    fi
+fi
+
+if [ -f ./vendor/bin/phpmd ]
+then
+    echo "===== Running Mess Detector checks..."
+    ./vendor/bin/phpmd src text mess-dector-rules.xml --reportfile logs/mess-dector-output.txt -q
+    if [ $? -ne 0 ]
+    then
+       echo " - Mess Detector has found issues. see logs/mess-dector-output.txt"
     fi
 fi
 
@@ -26,16 +47,7 @@ then
     fi
 fi
 
-if [ -f ./vendor/bin/phpstan ]
-then
-    echo "===== Running Code lint checks..."
-    ./vendor/bin/phpstan analyse src --level=7 -q
-    if [ $? -ne 0 ]
-    then
-       echo " - PHP Standards has found issues."
-       STATUS=1
-    fi
-fi
+# reports
 
 if [[ $STATUS -gt 0 ]]
 then

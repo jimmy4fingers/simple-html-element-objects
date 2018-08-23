@@ -14,8 +14,7 @@ cache:
 # Run script
 script:
   # BDD tests
-- ./vendor/bin/phpspec run --config phpspec.travis.yml -vvv
+- ./vendor/bin/phpspec run --config phpspec.travis.yml
   # coding standards and analysis
 - ./vendor/bin/phpcs --standard=PSR2 src
-- ./vendor/bin/phpmd src text mess-dector-rules.xml
 - ./vendor/bin/phpstan analyse src --level=7
