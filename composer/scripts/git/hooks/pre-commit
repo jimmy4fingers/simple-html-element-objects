@@ -44,4 +44,11 @@ then
     echo "Commit aborted. Please fix the issues before committing."
 fi
 
+if [[ $STATUS -eq 0 ]]
+then
+    echo "========================================================"
+    echo "========================================================"
+    echo "Pre-commit checks passed."
+fi
+
 exit $STATUS
