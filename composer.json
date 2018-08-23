@@ -17,7 +17,7 @@
   "license": "MIT",
   "scripts": {
     "post-install-cmd": [
-      "php config\\git-setup.php"
+      "php composer-post-install.php"
     ]
   }
 }

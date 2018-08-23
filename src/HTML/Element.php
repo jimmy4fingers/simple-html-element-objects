@@ -99,7 +99,7 @@ class Element implements ElementInterface
      */
     public function getHTML()
     {
-        return $this->html;
+        #return $this->html;
     }
 
     /**
