@@ -22,7 +22,6 @@ then
     if [ $? -ne 0 ]
     then
        echo " - BDD tests have failed."
-       STATUS=1
     fi
 fi
 
