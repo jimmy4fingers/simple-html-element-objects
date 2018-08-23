@@ -1,18 +1,47 @@
 #!/bin/sh
 
-CWD=$(pwd)
 STATUS=0
 
 echo "Running pre commit checks..."
 
-if [ -f $CWD/vendor/bin/phpspec ]
+if [ -f ./vendor/bin/phpspec ]
 then
+    echo "===== Running BDD tests..."
     ./vendor/bin/phpspec run --quiet
     if [ $? -ne 0 ]
     then
-       echo "BDD tests have failed - commit aborted"
-       STATUS = 1
+       echo " - BDD tests have failed."
+       STATUS=1
     fi
+fi
+
+if [ -f ./vendor/bin/phpcs ]
+then
+    echo "===== Running Code Sniffer PSR2 checks..."
+    ./vendor/bin/phpcs --report-full=logs/phpcs-report.txt src --standard=PSR2 -q
+    if [ $? -ne 0 ]
+    then
+       echo " - Code Sniffer has found issues, see logs/phpcs-report.txt for details"
+       STATUS=1
+    fi
+fi
+
+if [ -f ./vendor/bin/phpstan ]
+then
+    echo "===== Running Code lint checks..."
+    ./vendor/bin/phpstan analyse src --level=7 -q
+    if [ $? -ne 0 ]
+    then
+       echo " - PHP Standards has found issues."
+       STATUS=1
+    fi
+fi
+
+if [[ $STATUS -gt 0 ]]
+then
+    echo "========================================================"
+    echo "========================================================"
+    echo "Commit aborted. Please fix the issues before committing."
 fi
 
 exit $STATUS
