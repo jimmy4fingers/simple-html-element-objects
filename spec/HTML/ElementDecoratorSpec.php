@@ -108,4 +108,10 @@ class ElementDecoratorSpec extends ObjectBehavior
         $this->beConstructedWith($inputElement);
         $this->__toString()->shouldReturn($expected);
     }
+
+    function it_sets_element()
+    {
+        $this->setElement(new Element(['tag' => 'div']));
+        $this->__toString()->shouldReturn('<div></div>');
+    }
 }
