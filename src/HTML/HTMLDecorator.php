@@ -5,64 +5,108 @@ namespace ElementObjects\HTML;
 class HTMLDecorator
 {
     /**
-     * @var ElementInterface
+     * @var ElementDecoratorInterface
      */
     private $element;
     /**
-     * @var ElementInterface[]
+     * @var ElementDecoratorInterface[]
      */
     private $parents;
     /**
-     * @var ElementInterface[]
+     * @var ElementDecoratorInterface[]
      */
     private $before;
     /**
-     * @var ElementInterface[]
+     * @var ElementDecoratorInterface[]
      */
     private $after;
 
+
     /**
-     * @param ElementInterface $element
+     * @param ElementDecoratorInterface $element
      */
-    public function setElement(ElementInterface $element)
+    public function setElement(ElementDecoratorInterface $element)
     {
         $this->element = $element;
     }
 
     /**
-     * @param ElementInterface $element
+     * @param ElementDecoratorInterface $element
      */
-    public function setParentElement(ElementInterface $element)
+    public function setParentElement(ElementDecoratorInterface $element)
     {
         $this->parents[] = $element;
     }
 
     /**
-     * @param ElementInterface $element
+     * @param ElementDecoratorInterface $element
      */
-    public function setBeforeElement(ElementInterface $element)
+    public function setBeforeElement(ElementDecoratorInterface $element)
     {
         $this->before[] = $element;
     }
 
     /**
-     * @param ElementInterface $element
+     * @param ElementDecoratorInterface $element
      */
-    public function setAfterElement(ElementInterface $element)
+    public function setAfterElement(ElementDecoratorInterface $element)
     {
         $this->after[] = $element;
     }
 
-    // @todo auto inject ElementDecorator
-    public function __toString()
+    public function __toString():string
     {
-        // TODO: write logic here
+        return $this->setElementString();
+    }
 
-        // loop wrapper elements
-            // loop before elements
-                // element
-            // loop after elements
-        // end
-        return '';
+    private function setElementString()
+    {
+        $string = '';
+
+        $string .= $this->getBeforeString();
+        $string .= $this->element->__toString();
+        $string .= $this->getAfterString();
+
+        $string = $this->setParentString($string);
+
+        return $string;
+    }
+
+    private function getBeforeString()
+    {
+        $string = '';
+        if (!empty($this->before)) {
+            foreach ($this->before as $element) {
+                $string .= $element->__toString();
+            }
+        }
+        return $string;
+    }
+
+    private function getAfterString()
+    {
+        $string = '';
+        if (!empty($this->after)) {
+            foreach ($this->after as $element) {
+                $string .= $element->__toString();
+            }
+        }
+        return $string;
+    }
+
+    private function setParentString($string)
+    {
+        if (!empty($this->parents)) {
+            $startTags = '';
+            foreach (array_reverse($this->parents) as $element) {
+                $startTags .= $element->getTag();
+            }
+            $endTags = '';
+            foreach ($this->parents as $element) {
+                $endTags .= $element->getEndTag();
+            }
+            return $startTags . $string . $endTags;
+        }
+        return $string;
     }
 }

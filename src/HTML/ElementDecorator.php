@@ -11,7 +11,14 @@ class ElementDecorator implements ElementDecoratorInterface
      *
      * @param ElementInterface $element
      */
-    public function __construct(ElementInterface $element)
+    public function __construct(ElementInterface $element = null)
+    {
+        if (!is_null($element)) {
+            $this->setElement($element);
+        }
+    }
+
+    public function setElement(ElementInterface $element)
     {
         $this->element = $element;
     }
